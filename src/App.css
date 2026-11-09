@@ -1,0 +1,434 @@
+
+/* ========================================
+   1. FONTS
+======================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap");
+
+
+/* ========================================
+   2. GLOBAL / VARIABLES
+======================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --background: #16191d;
+  --text: #f3f1ec;
+  --accent: #f07955;
+  --muted: #819099;
+  text-align: left;
+  --card-background: #20252b;
+  --card-bg: var(--card-background);
+  --card-border: #353c43;
+
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+
+  background-color: var(--background);
+  color: var(--text);
+}
+
+
+/* ========================================
+   3. LAYOUT
+======================================== */
+
+.dashboard {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 64px 30px;
+}
+
+
+/* ========================================
+   4. TYPOGRAPHY
+======================================== */
+
+.eyebrow {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+h1 {
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -3px;
+  line-height: 1.1;
+  margin: 18px 0;
+}
+
+h1 em {
+  color: var(--accent);
+  font-style: italic;
+}
+
+header p {
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+  margin-top: 20px;
+}
+
+
+/* ========================================
+   5. CHART CONTAINER
+======================================== */
+
+.chart-card {
+  margin-top: 16px;
+  padding: 32px;
+
+  background-color: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+}
+
+.chart-card h2 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 28px;
+}
+
+.chart-card svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+
+/* ========================================
+   6. RESPONSIVE — TABLET
+======================================== */
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 48px 24px;
+  }
+
+  h1 {
+    font-size: clamp(2.8rem, 10vw, 4.5rem);
+    letter-spacing: -2px;
+  }
+
+  .chart-card {
+    margin-top: 16px;
+    padding: 24px;
+  }
+}
+
+
+/* ========================================
+   7. RESPONSIVE — MOBILE
+======================================== */
+
+@media (max-width: 480px) {
+  .dashboard {
+    padding: 32px 16px;
+  }
+
+  .chart-card {
+    padding: 20px 12px;
+  }
+
+  .chart-card h2 {
+    font-size: 16px;
+  }
+
+  header p {
+    font-size: 14px;
+  }
+}
+
+
+/* ========================================
+   8. ACCESSIBILITY
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* ========================================
+   9. BAR CHART — RESPONSIVE
+======================================== */
+
+.barplot-desktop {
+  display: block;
+}
+
+.barplot-mobile {
+  display: none;
+}
+
+.barplot svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ========================================
+   10. MOBILE CHART & LEGEND
+======================================== */
+
+@media (max-width: 768px) {
+  .barplot-desktop {
+    display: none;
+  }
+
+  .barplot-mobile {
+    display: block;
+  }
+
+  .country-legend {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--card-border);
+  }
+
+  .country-legend h3 {
+    margin: 0 0 20px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .country-legend-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 16px;
+  }
+
+  .country-legend-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    min-width: 0;
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .country-code {
+    flex-shrink: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 360px) {
+  .country-legend-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ========================================
+   FLOATING TOOLTIP
+======================================== */
+
+.chart-interactive {
+  position: relative;
+}
+
+.chart-tooltip {
+  position: absolute;
+  z-index: 10;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+
+  width: max-content;
+  max-width: min(240px, 90%);
+
+  margin: 0;
+  padding: 10px 14px;
+
+  background: var(--background);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 20%);
+
+  color: var(--text);
+  font-size: 12px;
+
+  pointer-events: none;
+
+}
+
+.chart-tooltip strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* MAP LEGEND */
+
+.map-legend {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.map-legend-title {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.map-legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.map-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.map-legend-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  border-radius: 2px;
+}
+
+.world-map {
+  position: relative;
+  margin-top: 16px;
+}
+
+.world-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.map-tooltip {
+  position: absolute;
+  z-index: 10;
+
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  padding: 10px 14px;
+  width: max-content;
+  max-width: 240px;
+
+  background: var(--background);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 20%);
+
+  color: var(--text);
+  font-size: 12px;
+
+  pointer-events: none;
+  
+}
+
+.map-tooltip strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+
+/* ========================================
+   DASHBOARD STATS
+======================================== */
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding: 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.stat-value {
+  color: var(--accent);
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.stat-detail {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    padding: 18px;
+  }
+}
+
+/* Keyboard focus is visible on interactive SVG shapes. */
+.interactive-bar:focus-visible,
+.world-map path[role="button"]:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+  stroke: var(--text);
+  stroke-width: 2;
+}
+
+/* Keep tooltips inside narrow chart containers. */
+.chart-tooltip,
+.map-tooltip {
+  max-width: min(240px, calc(100% - 16px));
+}
